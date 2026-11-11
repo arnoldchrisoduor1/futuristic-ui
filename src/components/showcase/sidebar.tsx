@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { registry, type ComponentStatus } from "../../lib/registry";
-import { useTheme } from "../../components/providers/theme-provider";
+import { useSymbioteTransition } from "../../hooks/use-symbiote-transition";
 import { cn } from "../../lib/utils";
 
 const statusDot: Record<ComponentStatus, string> = {
@@ -38,7 +38,7 @@ function NavLink({
 
 export function Sidebar() {
   const pathname = usePathname();
-  const { theme, mounted, toggleTheme } = useTheme();
+  const { theme, mounted, toggle } = useSymbioteTransition();
 
   return (
     <aside className="sticky top-0 flex h-screen w-64 shrink-0 flex-col border-r border-border bg-surface">
@@ -79,7 +79,7 @@ export function Sidebar() {
 
       <div className="border-t border-border p-3">
         <button
-          onClick={() => toggleTheme()}
+          onClick={() => toggle()}
           className="w-full rounded-md border border-border bg-surface-elevated px-3 py-2 text-sm transition-colors hover:bg-muted"
         >
           {mounted ? `Switch to ${theme === "dark" ? "light" : "dark"}` : "Toggle theme"}
